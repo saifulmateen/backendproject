@@ -7,7 +7,18 @@ import connectDB from "./db/index.js";
 
 
 connectDB()
-
+.then(() => {
+    app.on("error", (err) => {
+        console.log("Error in DB Connection: ", err);
+        throw err;
+    })
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`Server is running at ${process.env.PORT} PORT`);
+    })
+})
+.catch((err) => {
+    console.log("DB Connection Failed: ", err);    
+})
 
 
 
