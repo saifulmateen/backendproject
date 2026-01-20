@@ -36,6 +36,12 @@ const registerUser = asyncHandler(async (req, res) => {
     })
 
     const createdUser = await User.findById(user._id).select("-passowrd -refreshToken")
+
+    if(!createdUser) throw new ApiError(405, "User can't be created right now.");
+
+    res.status(201).json(
+        new ApiResponse(200, createdUser, "User registered successfully.")
+    )
 })
 
 export {registerUser}
